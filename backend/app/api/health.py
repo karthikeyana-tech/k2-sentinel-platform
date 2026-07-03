@@ -1,12 +1,24 @@
 from fastapi import APIRouter
 
-router = APIRouter(tags=["Health"])
+from app.schemas.response import ApiResponse
+
+router = APIRouter(
+    prefix="/health",
+    tags=["Health"],
+)
 
 
-@router.get("/health")
-async def health_check():
-    return {
-        "status": "healthy",
-        "service": "K² Sentinel",
-        "version": "0.1.0",
-    }
+@router.get(
+    "",
+    response_model=ApiResponse,
+    summary="Health Check",
+)
+def health_check():
+    return ApiResponse(
+        success=True,
+        message="Health check successful",
+        data={
+            "status": "healthy",
+            "service": "K² Sentinel API",
+        },
+    )
