@@ -22,3 +22,15 @@ def health_check():
             "service": "K² Sentinel API",
         },
     )
+
+
+@router.get(
+    "/error",
+    summary="Test Global Exception Handler",
+)
+def test_exception():
+    """
+    Temporary endpoint to test the global exception handler.
+    This endpoint will be removed before production.
+    """
+    raise Exception("This is a test exception.")

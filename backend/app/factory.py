@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from app.api.health import router as health_router
 from app.core.config import settings
 from app.core.logging import setup_logging
+from app.exceptions.handlers import register_exception_handlers
 from app.middleware.request_logging import RequestLoggingMiddleware
 
 
@@ -22,6 +23,9 @@ def create_app() -> FastAPI:
 
     # Register middleware
     app.add_middleware(RequestLoggingMiddleware)
+
+    # Register global exception handlers
+    register_exception_handlers(app)
 
     # Register API routers
     app.include_router(
