@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 
+from app.exceptions.custom import ResourceNotFoundException
 from app.schemas.response import ApiResponse
 
 router = APIRouter(
@@ -30,7 +31,8 @@ def health_check():
 )
 def test_exception():
     """
-    Temporary endpoint to test the global exception handler.
-    This endpoint will be removed before production.
+    Temporary endpoint to test custom exception handling.
     """
-    raise Exception("This is a test exception.")
+    raise ResourceNotFoundException(
+        message="Tourist not found."
+    )
