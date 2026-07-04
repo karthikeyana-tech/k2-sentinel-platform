@@ -1,27 +1,29 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
+"""
+Application configuration settings for K² Sentinel.
+"""
+
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    # Application
-    PROJECT_NAME: str = "K² Sentinel API"
-    VERSION: str = "0.1.0"
-    API_PREFIX: str = "/api/v1"
+    """
+    Central configuration loaded from environment variables.
+    """
 
-    # Server
-    HOST: str = "0.0.0.0"
-    PORT: int = 8000
-    DEBUG: bool = True
-
-    # Environment
+    PROJECT_NAME: str = "K² Sentinel"
+    VERSION: str = "1.0.0"
     ENVIRONMENT: str = "development"
 
-    # Logging
+    API_PREFIX: str = "/api/v1"
+
     LOG_LEVEL: str = "INFO"
 
-    model_config = SettingsConfigDict(
-        env_file=".env.example",
-        extra="ignore",
-    )
+    DATABASE_URL: str
+
+    class Config:
+        env_file = ".env"
+        extra = "ignore"
 
 
+# ✅ THIS IS WHAT WAS MISSING (CRITICAL FIX)
 settings = Settings()
